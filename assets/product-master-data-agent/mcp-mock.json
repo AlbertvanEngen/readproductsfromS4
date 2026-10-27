@@ -1,0 +1,303 @@
+{
+  "servers": {
+    "sap-s4-product-master": {
+      "mcp_server_name": "sap.mcp/api_product_srv",
+      "description": "MCP server for the SAP S/4HANA Product Master Data OData API (API_PRODUCT_SRV). Provides read-only access to product master records, descriptions, and basic texts.",
+      "tools": {
+        "get_metadata_api_product_srv": {
+          "description": "Get metadata of the OData service with optional filtering to reduce token consumption. Returns the metadata in XML format, which can be used to discover available entities and their properties.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "EntitySets": {
+                "type": "string",
+                "description": "Comma-separated list of entity sets to filter metadata"
+              }
+            },
+            "required": []
+          },
+          "mock_response": "<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"1.0\" xmlns:edmx=\"http://schemas.microsoft.com/ado/2007/06/edmx\"><edmx:DataServices><Schema Namespace=\"API_PRODUCT_SRV\" xmlns=\"http://schemas.microsoft.com/ado/2008/09/edm\"><EntityType Name=\"A_ProductType\"><Key><PropertyRef Name=\"Product\"/></Key><Property Name=\"Product\" Type=\"Edm.String\" Nullable=\"false\" MaxLength=\"40\"/><Property Name=\"ProductType\" Type=\"Edm.String\" MaxLength=\"4\"/><Property Name=\"ProductGroup\" Type=\"Edm.String\" MaxLength=\"9\"/><Property Name=\"BaseUnit\" Type=\"Edm.String\" MaxLength=\"3\"/><Property Name=\"Division\" Type=\"Edm.String\" MaxLength=\"2\"/><Property Name=\"GrossWeight\" Type=\"Edm.Decimal\" Precision=\"13\" Scale=\"3\"/><Property Name=\"NetWeight\" Type=\"Edm.Decimal\" Precision=\"13\" Scale=\"3\"/></EntityType></Schema></edmx:DataServices></edmx:Edmx>"
+        },
+        "batch_for_api_product_srv": {
+          "description": "Execute multiple OData operations in a single batch request using the $batch endpoint.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "requests": {
+                "type": "array",
+                "description": "Array of OData requests to batch"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "responses": []
+          }
+        },
+        "list_a_product_for_api_product_srv": {
+          "description": "Retrieve a list of entities from the A_Product collection in the api_product_srv service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$top": {
+                "type": "integer",
+                "description": "Maximum number of records to return (max 100)"
+              },
+              "$skip": {
+                "type": "integer",
+                "description": "Number of records to skip"
+              },
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression, e.g. ProductGroup eq 'ELECTR'"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              },
+              "$orderby": {
+                "type": "string",
+                "description": "Sort expression, e.g. Product asc"
+              },
+              "$expand": {
+                "type": "string",
+                "description": "Navigation properties to expand inline"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "LAPTOP-PRO-X",
+                "ProductType": "FERT",
+                "ProductGroup": "ELECTR",
+                "BaseUnit": "EA",
+                "Division": "10",
+                "GrossWeight": "2.500",
+                "NetWeight": "2.100",
+                "WeightUnit": "KG",
+                "ProductIsConfigurable": false,
+                "CreationDate": "/Date(1672531200000)/",
+                "LastChangeDate": "/Date(1704067200000)/"
+              },
+              {
+                "Product": "MONITOR-4K-27",
+                "ProductType": "FERT",
+                "ProductGroup": "ELECTR",
+                "BaseUnit": "EA",
+                "Division": "10",
+                "GrossWeight": "6.800",
+                "NetWeight": "5.900",
+                "WeightUnit": "KG",
+                "ProductIsConfigurable": false,
+                "CreationDate": "/Date(1672531200000)/",
+                "LastChangeDate": "/Date(1704067200000)/"
+              }
+            ]
+          }
+        },
+        "get_a_product_for_api_product_srv": {
+          "description": "Retrieve a single entity by its key from the A_Product collection in the api_product_srv service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "Product": {
+                "type": "string",
+                "description": "Product number (material number) — the unique key for the product"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              },
+              "$expand": {
+                "type": "string",
+                "description": "Navigation properties to expand inline"
+              }
+            },
+            "required": ["Product"]
+          },
+          "mock_response": {
+            "Product": "LAPTOP-PRO-X",
+            "ProductType": "FERT",
+            "ProductGroup": "ELECTR",
+            "BaseUnit": "EA",
+            "Division": "10",
+            "GrossWeight": "2.500",
+            "NetWeight": "2.100",
+            "WeightUnit": "KG",
+            "ProductIsConfigurable": false,
+            "CreationDate": "/Date(1672531200000)/",
+            "LastChangeDate": "/Date(1704067200000)/"
+          }
+        },
+        "count_a_product_for_api_product_srv": {
+          "description": "Get the total count of entities in the A_Product collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression to count matching records"
+              }
+            },
+            "required": []
+          },
+          "mock_response": 42
+        },
+        "list_a_productbasictext_for_api_product_srv": {
+          "description": "Retrieve a list of entities from the A_ProductBasicText collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$top": {
+                "type": "integer",
+                "description": "Maximum number of records to return"
+              },
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated fields to return"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "LAPTOP-PRO-X",
+                "Language": "EN",
+                "BasicText": "Professional laptop with 16GB RAM, 512GB SSD, Intel Core i7 processor. Ideal for business and development use. Comes with 3-year warranty."
+              },
+              {
+                "Product": "MONITOR-4K-27",
+                "Language": "EN",
+                "BasicText": "27-inch 4K UHD IPS display monitor with USB-C connectivity, 99% sRGB color coverage. Suitable for design and office work."
+              }
+            ]
+          }
+        },
+        "get_a_productbasictext_for_api_product_srv": {
+          "description": "Retrieve a single entity by its key from the A_ProductBasicText collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "Product": {
+                "type": "string",
+                "description": "Product number"
+              },
+              "Language": {
+                "type": "string",
+                "description": "Language key, e.g. EN"
+              }
+            },
+            "required": ["Product", "Language"]
+          },
+          "mock_response": {
+            "Product": "LAPTOP-PRO-X",
+            "Language": "EN",
+            "BasicText": "Professional laptop with 16GB RAM, 512GB SSD, Intel Core i7 processor. Ideal for business and development use. Comes with 3-year warranty."
+          }
+        },
+        "count_a_productbasictext_for_api_product_srv": {
+          "description": "Get the total count of entities in the A_ProductBasicText collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              }
+            },
+            "required": []
+          },
+          "mock_response": 15
+        },
+        "list_a_productdescription_for_api_product_srv": {
+          "description": "Retrieve a list of entities from the A_ProductDescription collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$top": {
+                "type": "integer",
+                "description": "Maximum number of records to return"
+              },
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated fields to return"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "LAPTOP-PRO-X",
+                "Language": "EN",
+                "ProductDescription": "Laptop Pro X - Business Edition"
+              },
+              {
+                "Product": "MONITOR-4K-27",
+                "Language": "EN",
+                "ProductDescription": "4K Monitor 27 Inch - UHD Display"
+              }
+            ]
+          }
+        },
+        "get_a_productdescription_for_api_product_srv": {
+          "description": "Retrieve a single entity by its key from the A_ProductDescription collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "Product": {
+                "type": "string",
+                "description": "Product number"
+              },
+              "Language": {
+                "type": "string",
+                "description": "Language key, e.g. EN"
+              }
+            },
+            "required": ["Product", "Language"]
+          },
+          "mock_response": {
+            "Product": "LAPTOP-PRO-X",
+            "Language": "EN",
+            "ProductDescription": "Laptop Pro X - Business Edition"
+          }
+        },
+        "count_a_productdescription_for_api_product_srv": {
+          "description": "Get the total count of entities in the A_ProductDescription collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              }
+            },
+            "required": []
+          },
+          "mock_response": 42
+        }
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created_for_agent": "product-master-data-agent",
+    "mock_mode": true,
+    "deterministic": true,
+    "total_servers": 1,
+    "total_tools": 11,
+    "generated_from": ["translation.json"],
+    "generation_date": "2026-10-27"
+  }
+}
